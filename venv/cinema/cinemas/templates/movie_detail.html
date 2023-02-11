@@ -1,0 +1,17 @@
+{% extends 'base_template.html' %}
+    {% block content %}
+        Name: {{room.room_name}} <br>
+        Places: {{room.places}} <br>
+        Projector availability: {{room.projector_availability}} <br>
+            Future reservations:<br>
+    {% for reservation in reservations %}
+        {% if reservation.date > current_date %}
+            {{reservation.date}} {{reservation.comment}}<br>
+        {% endif %}
+    {% endfor %}
+    <a href="/room/modify/{{room.id}}">Modify room</a> |
+    <a href="/room/delete/{{room.id}}">Delete room</a> |
+    <a href="/room/reserve/{{room.id}}">Reserve room</a> |
+    <br>
+
+    {% endblock %}

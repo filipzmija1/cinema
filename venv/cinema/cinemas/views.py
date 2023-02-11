@@ -40,8 +40,19 @@ class AddRoom(View):
 
 def show_rooms(request):
     data = ScreeningRoom.objects.all()
+    current_date = datetime.now().date()
+    reserve_data = RoomReservation.objects.get(date=current_date)
+    for room in data:
+        for date in room.roomreservation_set.all():
+            hello = room.roomreservation_set.all()
+            if current_date == date.date:
+                available = 'available'
+            else:
+                available = 'not available'
     context = {
-        'rooms': data
+        'rooms': data,
+        'current_date': current_date,
+        'reservations': hello,
     }
     return render(request, 'show_rooms.html', context)
 
@@ -94,8 +105,10 @@ class ModifyRoom(View):
 class RoomReserve(View):
     def get(self, request, id_, *args, **kwargs):
         data = ScreeningRoom.objects.get(id=id_)
+        reserve_data = RoomReservation.objects.filter(room_id=id_)
         context = {
             'room': data,
+            'reservations': reserve_data,
         }
         return render(request, 'reserve.html', context)
 
@@ -105,7 +118,7 @@ class RoomReserve(View):
         room_id = request.POST.get('id_')
         room_object = ScreeningRoom.objects.get(id=room_id)
         current_date = str(datetime.now().date())
-        if date > current_date:
+        if date >= current_date:
             if RoomReservation.objects.filter(Q(room_id=room_id) & Q(date=date)):   # statement to check if reservation on this day already exists
                 return HttpResponse('The room is already reserved for this day')
             else:
@@ -113,3 +126,15 @@ class RoomReserve(View):
                 return HttpResponseRedirect('/rooms')
         else:
             return HttpResponse('You cannot reserve room on past days')
+
+
+def room_details(request, id_):
+    room_data = ScreeningRoom.objects.get(id=id_)
+    reservation_data = RoomReservation.objects.filter(room_id=id_).order_by('-date')
+    current_date = datetime.now().date()
+    context = {
+        'room': room_data,
+        'reservations': reservation_data,
+        'current_date': current_date,
+    }
+    return render(request, 'movie_detail.html', context)

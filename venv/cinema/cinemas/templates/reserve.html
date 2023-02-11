@@ -7,4 +7,11 @@
             <label>Date: </label><input type="date" name="date"><br>
             <input type="submit" value="Reserve">
         </form>
+    This room reservations: <br>
+        {% for reservation in reservations %}
+
+                {{reservation.date}} {{reservation.comment}} <br>
+
+        {% endfor %}
+<br>
     {% endblock %}

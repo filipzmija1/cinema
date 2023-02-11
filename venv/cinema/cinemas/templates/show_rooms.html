@@ -4,7 +4,10 @@
         {% for room in rooms %}
             <li>Name:<a href="/room/{{room.id}}">{{room.room_name}}</a>
                 Places: {{room.places}} ,
-                Room availability: ,
+                {% for date in reservations %}
+                 {% if current_date == date.date %} Room availability: not available {% endif %}
+                {% endfor %}
+
                 Projector availability: {{room.projector_availability}} ,
                 <form action="/room/modify/{{room.id}}"><input type="submit" Value="Modify room"></form>
                 <form action="/room/delete/{{room.id}}"><input type="submit" Value="Delete room"></form>
