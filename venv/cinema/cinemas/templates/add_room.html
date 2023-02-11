@@ -1,0 +1,14 @@
+{% extends 'base_template.html' %}
+    {% block content %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <label>Screening room name: </label><input type="text" name="name"><br>
+            <label>Places: </label><input type="text" name="places"><br>
+            <label>Projector availability: </label>
+                <select name="projector">
+                    <option [ngValue]="true">Available</option>
+                    <option [ngValue]="false">Not available</option>
+                </select><br>
+            <input type="submit" value="Add new room">
+        </form>
+    {% endblock %}
