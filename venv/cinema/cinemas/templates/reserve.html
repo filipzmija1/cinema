@@ -1,0 +1,10 @@
+{% extends 'base_template.html' %}
+    {% block content %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="id_" value="{{room.id}}">
+            <label>Comment: </label><input type="text" name="comment"><br>
+            <label>Date: </label><input type="date" name="date"><br>
+            <input type="submit" value="Reserve">
+        </form>
+    {% endblock %}

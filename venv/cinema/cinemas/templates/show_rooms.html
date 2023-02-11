@@ -1,0 +1,15 @@
+{% extends 'base_template.html' %}
+{% block content %}
+    <ul>
+        {% for room in rooms %}
+            <li>Name:<a href="/room/{{room.id}}">{{room.room_name}}</a>
+                Places: {{room.places}} ,
+                Room availability: ,
+                Projector availability: {{room.projector_availability}} ,
+                <form action="/room/modify/{{room.id}}"><input type="submit" Value="Modify room"></form>
+                <form action="/room/delete/{{room.id}}"><input type="submit" Value="Delete room"></form>
+                <form action="/room/reserve/{{room.id}}"><input type="submit" Value="Reserve room"></form>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

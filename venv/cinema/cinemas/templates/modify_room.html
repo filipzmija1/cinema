@@ -1,0 +1,16 @@
+{% extends 'base_template.html' %}
+    {% block content %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="id_" value="{{room.id}}">
+            <label>Name: </label><input type="text" name="name" value="{{room.room_name}}"><br>
+            <label>Places: </label><input type="text" name="places" value="{{room.places}}"><br>
+            <label>Projector availability: </label>
+                <select name="projector">
+                    <option selected="selected">{{room.projector_availability}}</option>
+                    <option [ngValue]="true">True</option>
+                    <option [ngValue]="false">False</option>
+                </select><br>
+            <input type="submit" value="Modify room">
+        </form>
+    {% endblock %}
